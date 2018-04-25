@@ -27,12 +27,16 @@ int Calentador::accedeTemperatura() const
 
 void Calentador::calentar()
 {
-    temperatura+=5;
+    if(temperatura+incremento <= 30){
+        temperatura+= incremento;
+    }
 }
 
 void Calentador::enfriar()
 {
-    temperatura-=5;
+    if(temperatura-incremento >= -10){
+        temperatura-=incremento;
+    }
 }
 
 void Calentador::imprimeTemperatura()
@@ -44,8 +48,15 @@ int main()
 {
     Calentador c1;
     Calentador c2;
-    c1.calentar();
-    c2.enfriar();
-    c1.imprimeTemperatura();
-    c2.imprimeTemperatura();
+    
+    for (int i=0; i<10; i++){
+        c1.calentar();
+        c1.imprimeTemperatura();
+    }
+    
+    for (int i=0; i<10; i++){
+        c2.enfriar();
+        c2.imprimeTemperatura();
+    }
+    
 }

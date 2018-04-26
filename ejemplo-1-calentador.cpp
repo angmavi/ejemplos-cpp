@@ -5,9 +5,11 @@ class Calentador
   private: 
         int temperatura;
         int incremento;
+        int min;
+        int max;
   
   public:
-        Calentador();
+        Calentador(int min, int max, int temperatura=0);
         void calentar();
         void enfriar();
         void imprimeCentigrados() const;
@@ -15,10 +17,23 @@ class Calentador
         int accedeTemperatura() const; //se le agrega a los met. de acceso, significa que no modifica las variables.
 };// punto y coma obligatorio
 
-Calentador::Calentador()
+Calentador::Calentador(int min, int max, int temperatura)
 {
-    temperatura=15;
+    if(max<min){
+      std::cout <<"Error en el rango min-max" <<std::endl;
+     std::exit(EXIT_FAILURE);
+
+        //throw "Error en el rango min-max";
+    }
+    if(temperatura>=min && temperatura<=max){
+        this->temperatura=temperatura;
+    }
+    else {
+        this->temperatura=min;
+    }
     incremento=3;
+    this->min=min;
+    this->max=max;
 }
 
 int Calentador::accedeTemperatura() const
@@ -28,14 +43,14 @@ int Calentador::accedeTemperatura() const
 
 void Calentador::calentar()
 {
-    if(temperatura+incremento <= 30){
+    if(temperatura+incremento <= this->max){
         temperatura+= incremento;
     }
 }
 
 void Calentador::enfriar()
 {
-    if(temperatura-incremento >= -10){
+    if(temperatura-incremento >= this->min){
         temperatura-=incremento;
     }
 }
@@ -55,8 +70,9 @@ void Calentador::imprimeFarenheit() const
 
 int main()
 {
-    Calentador c1;
-    Calentador c2;
+   /* try{*/
+    Calentador c1{-10,10};
+    Calentador c2{30,10, -10};
     
   
         c1.calentar();
@@ -66,5 +82,8 @@ int main()
         c2.enfriar();
         c2.imprimeCentigrados();
         c2.imprimeFarenheit();
-    
-}
+    }
+    /*catch(const std::runtime_error &e){
+        
+    }
+}*/
